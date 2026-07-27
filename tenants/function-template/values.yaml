@@ -19,18 +19,30 @@ serving:
   runtime: knative
   imagePullPolicy: IfNotPresent
 
-# Optional: render Secret CRs from values (default off — use bootstrap instead).
+# Legacy inline-secret rendering — disabled in favour of ExternalSecrets below.
 secrets:
+  enabled: false
+
+# External Secrets Operator — fetches credentials from AWS Secrets Manager (local)
+# or Vault (production) and creates push-secret / git-repo-secret in each namespace.
+#
+# AWS Secrets Manager layout (local):
+#   openfunction/registry  →  { server, username, password }
+#   openfunction/git       →  { username, password }
+#
+# Vault layout (production):
+#   openfunction/registry  →  same keys
+#   openfunction/git       →  same keys
+#
+# To switch stores, change storeRef.name to "vault" (and deploy cluster-secret-store-vault.yaml).
+externalSecrets:
   enabled: true
-  registry:
-    server: "https://index.docker.io/v1/"
-    username: "vuxucam"
-    password: "dckr_pat_9VHZwt8bmyDNenYuxTbQM34tNpo"
-    email: "vuchtbk272000@gmail.com"
-    auth: ""
-  git:
-    username: "vuchtbk272000"
-    password: "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"
+  refreshInterval: "1h"
+  storeRef:
+    name: aws-secretsmanager   # swap to "vault" in production
+    kind: ClusterSecretStore
+  registrySecretKey: openfunction/registry
+  gitSecretKey: openfunction/git
 
 # Per-function values. Omit imageCredentials / git credentials / builder / serving
 # to inherit the defaults above. Override only when a function needs something different.
@@ -47,13 +59,3 @@ functions: []
 #       url: "https://github.com/org/repo.git"
 #       sourceSubPath: "function-1"
 #       revision: "COMMIT_SHA"
-#   # Optional overrides:
-#   # imageCredentials:
-#   #   name: custom-push-secret
-#   # build:
-#   #   builder: other-builder:tag
-#   #   srcRepo:
-#   #     credentials:
-#   #       name: custom-git-secret
-#   # serving:
-#   #   imagePullPolicy: Always
