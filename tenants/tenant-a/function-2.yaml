@@ -2,6 +2,7 @@ apiVersion: core.openfunction.io/v1beta1
 kind: Function
 metadata:
   name: function-2
+  namespace: tenant-a-lambda
   annotations:
     openfunction.io/revision-controller: enable
     openfunction.io/revision-controller-params: |
