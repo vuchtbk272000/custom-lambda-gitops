@@ -16,5 +16,5 @@ function-template:
           GOOGLE_FUNCTION_SOURCE: "main.py"
         srcRepo:
           url: "https://github.com/vuchtbk272000/openfunction-python-helloworld.git"
-          sourceSubPath: "function-1"
-          revision: "abfb598c7c22f6ea0c0f003f3c0b230a8d137fd7"
+          sourceSubPath: "tenant-b/function-1"
+          revision: "885871706697ea4258474ac8e8aba846ec46da8e"
