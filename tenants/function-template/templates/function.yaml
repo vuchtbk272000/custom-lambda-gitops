@@ -1,0 +1,38 @@
+{{- range $fn := .Values.functions }}
+---
+apiVersion: core.openfunction.io/v1beta1
+kind: Function
+metadata:
+  name: {{ $fn.name }}
+  namespace: {{ $.Values.namespace.name }}
+  {{- with $fn.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "function-template.labels" $ | nindent 4 }}
+    tenant: {{ $.Values.namespace.name }}
+spec:
+  version: {{ $fn.version | default "v1.0.0" | quote }}
+  image: {{ $fn.image | quote }}
+  imageCredentials:
+    name: {{ dig "imageCredentials" "name" $.Values.imageCredentials.name $fn }}
+  build:
+    builder: {{ dig "build" "builder" $.Values.build.builder $fn | quote }}
+    {{- with $fn.build.env }}
+    env:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    srcRepo:
+      url: {{ $fn.build.srcRepo.url | quote }}
+      sourceSubPath: {{ dig "build" "srcRepo" "sourceSubPath" "" $fn | quote }}
+      revision: {{ $fn.build.srcRepo.revision | quote }}
+      credentials:
+        name: {{ dig "build" "srcRepo" "credentials" "name" $.Values.gitCredentials.name $fn }}
+  serving:
+    runtime: {{ dig "serving" "runtime" $.Values.serving.runtime $fn | quote }}
+    template:
+      containers:
+        - name: function
+          imagePullPolicy: {{ dig "serving" "imagePullPolicy" $.Values.serving.imagePullPolicy $fn }}
+{{- end }}

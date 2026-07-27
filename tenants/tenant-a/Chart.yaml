@@ -1,0 +1,10 @@
+apiVersion: v2
+name: tenant-a
+description: OpenFunction functions for tenant-a
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+dependencies:
+  - name: function-template
+    version: 0.1.0
+    repository: file://../function-template

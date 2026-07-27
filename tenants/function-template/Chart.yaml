@@ -1,0 +1,6 @@
+apiVersion: v2
+name: function-template
+description: Shared Helm chart for OpenFunction Function CRs and build secrets
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
