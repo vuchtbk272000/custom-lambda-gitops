@@ -21,7 +21,7 @@ serving:
 
 # Optional: render Secret CRs from values (default off — use bootstrap instead).
 secrets:
-  enabled: false
+  enabled: true
   registry:
     server: "https://index.docker.io/v1/"
     username: "vuxucam"
