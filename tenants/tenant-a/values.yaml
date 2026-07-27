@@ -23,7 +23,7 @@ function-template:
         srcRepo:
           url: "https://github.com/vuchtbk272000/openfunction-python-helloworld.git"
           sourceSubPath: "tenant-a/function-1"
-          revision: "885871706697ea4258474ac8e8aba846ec46da8e"
+          revision: "2b6da3110dffc1317e7fdae2912338215abfb45d"
 
     - name: function-2
       version: "v1.0.0"
