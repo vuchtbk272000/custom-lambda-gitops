@@ -1,7 +1,7 @@
 apiVersion: core.openfunction.io/v1beta1
 kind: Function
 metadata:
-  name: function-sample
+  name: function-1
   annotations:
     openfunction.io/revision-controller: enable
     openfunction.io/revision-controller-params: |
@@ -31,6 +31,3 @@ spec:
       containers:
         - name: function # DO NOT change this
           imagePullPolicy: IfNotPresent
-    # triggers:
-    #   http:
-    #     port: 8080
