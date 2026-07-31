@@ -1,14 +1,8 @@
 apiVersion: core.openfunction.io/v1beta1
 kind: Function
 metadata:
-  name: function-sample
-  namespace: serverless-functions
-  annotations:
-    openfunction.io/revision-controller: enable
-    openfunction.io/revision-controller-params: |
-      type: source
-      repo-type: github
-      polling-interval: 1m
+  name: function-1
+  namespace: lambda
 spec:
   version: "v1.0.0"
   image: "vuxucam/openfunction-python-helloworld:v1"
@@ -22,7 +16,7 @@ spec:
       GOOGLE_FUNCTION_SOURCE: "main.py"
     srcRepo:
       url: "https://github.com/vuchtbk272000/openfunction-python-helloworld.git"
-      sourceSubPath: "function-1"
+      sourceSubPath: "tenant-a/function-1"
       revision: "c12ff23dd9ce13fee597161eae2acd811c3d2864"
       credentials:
         name: git-repo-secret
@@ -30,8 +24,5 @@ spec:
     runtime: "knative"
     template:
       containers:
-        - name: function # DO NOT change this
+        - name: function
           imagePullPolicy: IfNotPresent
-    # triggers:
-    #   http:
-    #     port: 8080
