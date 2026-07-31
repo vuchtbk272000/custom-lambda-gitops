@@ -1,0 +1,37 @@
+apiVersion: core.openfunction.io/v1beta1
+kind: Function
+metadata:
+  name: function-sample
+  namespace: serverless-functions
+  annotations:
+    openfunction.io/revision-controller: enable
+    openfunction.io/revision-controller-params: |
+      type: source
+      repo-type: github
+      polling-interval: 1m
+spec:
+  version: "v1.0.0"
+  image: "vuxucam/openfunction-python-helloworld:v1"
+  imageCredentials:
+    name: push-secret
+  build:
+    builder: "openfunction/gcp-builder:v1"
+    env:
+      GOOGLE_FUNCTION_TARGET: "hello_world"
+      GOOGLE_FUNCTION_SIGNATURE_TYPE: "http"
+      GOOGLE_FUNCTION_SOURCE: "main.py"
+    srcRepo:
+      url: "https://github.com/vuchtbk272000/openfunction-python-helloworld.git"
+      sourceSubPath: "function-1"
+      revision: "c12ff23dd9ce13fee597161eae2acd811c3d2864"
+      credentials:
+        name: git-repo-secret
+  serving:
+    runtime: "knative"
+    template:
+      containers:
+        - name: function # DO NOT change this
+          imagePullPolicy: IfNotPresent
+    # triggers:
+    #   http:
+    #     port: 8080
