@@ -2,7 +2,7 @@ apiVersion: core.openfunction.io/v1beta1
 kind: Function
 metadata:
   name: function-2
-  namespace: lambda
+  namespace: serverless-functions
 spec:
   version: "v1.0.0"
   image: "vuxucam/openfunction-python-helloworld:v1"
@@ -16,7 +16,7 @@ spec:
       GOOGLE_FUNCTION_SOURCE: "main.py"
     srcRepo:
       url: "https://github.com/vuchtbk272000/openfunction-python-helloworld.git"
-      sourceSubPath: "tenant-a/function-2"
+      sourceSubPath: "function-2"
       revision: "885871706697ea4258474ac8e8aba846ec46da8e"
       credentials:
         name: git-repo-secret

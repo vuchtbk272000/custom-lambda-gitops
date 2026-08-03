@@ -1,60 +1,46 @@
-# GitOps — single company (plain Function YAML)
+# GitOps — Function manifests
 
-Deploy OpenFunction functions for **one company** onto **that company's cluster**.
+Thư mục này chứa các OpenFunction `Function` YAML được Argo CD đồng bộ vào namespace `serverless-functions`.
 
-- 1 Argo CD `Application` (no ApplicationSet)
-- 1 namespace (`lambda`)
-- Plain `Function` YAML files — **no Helm template**
-- Secrets created once with kubectl
-
-## Layout
+## Cấu trúc
 
 ```
-gitops/applications/
+applications/
 ├── function-1.yaml
 ├── function-2.yaml
 └── README.md
 ```
 
-Argo CD syncs every `*.yaml` in this folder into namespace `lambda`.
-
-## Secrets (create once)
+## Secret
 
 ```bash
-kubectl create namespace lambda --dry-run=client -o yaml | kubectl apply -f -
+kubectl create namespace serverless-functions --dry-run=client -o yaml | kubectl apply -f -
 
 kubectl create secret docker-registry push-secret \
   --docker-server=https://index.docker.io/v1/ \
   --docker-username=<user> --docker-password=<token> \
-  -n lambda
+  -n serverless-functions
 
 kubectl create secret generic git-repo-secret \
   --from-literal=username=<user> --from-literal=password=<pat> \
-  -n lambda
+  -n serverless-functions
 
 kubectl annotate secret push-secret git-repo-secret \
-  -n lambda build.shipwright.io/referenced.secret=true
+  -n serverless-functions build.shipwright.io/referenced.secret=true
 ```
 
-## Add a function
+## Thêm function
 
-Copy `function-1.yaml` → `function-3.yaml`, edit name / image / srcRepo, then:
+1. Thêm file `applications/function-3.yaml` (chỉnh `name`, `image`, `sourceSubPath`).
+2. Trên repo source: tạo `function-3/gitops.yaml` với `path: applications/function-3.yaml`.
+3. Đẩy cả hai repository.
 
-```bash
-git add applications/function-3.yaml && git commit -m "Add function-3" && git push
-```
+## Cập nhật sau khi đổi code
 
-## Update after code change
-
-CI cập nhật `spec.build.srcRepo.revision` (hoặc `spec.image`) trong file YAML tương ứng, rồi push.
+GitHub Actions trên repo source cập nhật `spec.build.srcRepo.revision` (yêu cầu secret `GITOPS_TOKEN`). Chi tiết: tài liệu setup, mục CI.
 
 ## Argo CD Application
 
 ```bash
-kubectl apply -f helm/argocd/applications/company-functions.yaml
+kubectl apply -f applications/openfunction-functions.yaml
 ```
-
-## When to use Helm template again
-
-Chỉ khi cần multi-tenant (nhiều namespace, defaults chung, External Secrets).
-Tham khảo `../function-template/` và `../tenants/`.

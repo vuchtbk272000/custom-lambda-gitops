@@ -1,6 +1,0 @@
-dependencies:
-- name: function-template
-  repository: file://../function-template
-  version: 0.1.0
-digest: sha256:702bca109101f556e4f84f3d22071d4955a81c687db0998fc5abd828adf5962b
-generated: "2026-07-27T11:47:58.697514+07:00"
