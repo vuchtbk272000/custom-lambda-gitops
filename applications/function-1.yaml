@@ -2,7 +2,7 @@ apiVersion: core.openfunction.io/v1beta1
 kind: Function
 metadata:
   name: function-1
-  namespace: serverless-functions
+  namespace: serverless-functions 
 spec:
   version: "v1.0.0"
   image: "vuxucam/openfunction-python-helloworld:v1"
