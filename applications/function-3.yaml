@@ -16,7 +16,7 @@ spec:
       GOOGLE_FUNCTION_SOURCE: "main.py"
     srcRepo:
       url: "https://github.com/vuchtbk272000/openfunction-python-helloworld.git"
-      sourceSubPath: "function-2"
+      sourceSubPath: "function-3"
       revision: "885871706697ea4258474ac8e8aba846ec46da8e"
       credentials:
         name: git-repo-secret
