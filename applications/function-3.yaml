@@ -17,7 +17,7 @@ spec:
     srcRepo:
       url: "https://github.com/vuchtbk272000/openfunction-python-helloworld.git"
       sourceSubPath: "function-3"
-      revision: "615c3f2d23ab9ba4707ca81851641db1e8a43677"
+      revision: "8aee616f575af6cc90ca1daafeacd817d52c25a2"
       credentials:
         name: git-repo-secret
   serving:
