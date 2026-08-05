@@ -5,7 +5,7 @@ metadata:
   namespace: serverless-functions
 spec:
   version: "v1.0.0"
-  image: "vuxucam/openfunction-python-helloworld:v1"
+  image: "registry-01.cloud.cmctelecom.vn/default-1351-bgwasrxyt9qj/vunt-cloudfunction-lab-func-2"
   imageCredentials:
     name: push-secret
   build:
